@@ -27,19 +27,29 @@ STATIC_VARIANTS = {
 }
 
 
-class Calibration(CalibrationDataReader):
-    """Feeds calibration images from the training split, one at a time."""
+def calibration_images(count: int = CALIBRATION_IMAGES) -> np.ndarray:
+    """A fixed random sample of training images (uint8, NHWC)."""
+    x, _ = load_split("train")
+    idx = np.sort(np.random.default_rng(SEED).choice(len(x), count, replace=False))
+    return np.stack([x[i] for i in idx])
 
-    def __init__(self, input_name: str, count: int = CALIBRATION_IMAGES):
-        x, _ = load_split("train")
-        idx = np.sort(np.random.default_rng(SEED).choice(len(x), count, replace=False))
-        self._batches = iter([{input_name: normalize(x[i])} for i in idx])
+
+class Calibration(CalibrationDataReader):
+    """Feeds calibration images to ONNX Runtime, one at a time."""
+
+    def __init__(self, input_name: str, images: np.ndarray):
+        self._batches = iter([{input_name: normalize(img)} for img in images])
 
     def get_next(self):
         return next(self._batches, None)
 
 
-def quantize_all(fp32: Path, out_dir: Path) -> dict[str, Path]:
+def quantize_all(
+    fp32: Path,
+    out_dir: Path,
+    images: np.ndarray,
+    static_variants: dict[str, CalibrationMethod] | None = None,
+) -> dict[str, Path]:
     """Create every int8 variant of `fp32` and return name to path."""
     prepared = out_dir / f"{fp32.stem}.prep.onnx"
     quant_pre_process(str(fp32), str(prepared))
@@ -48,12 +58,12 @@ def quantize_all(fp32: Path, out_dir: Path) -> dict[str, Path]:
     dyn = out_dir / f"{fp32.stem}.dynamic.onnx"
     quantize_dynamic(str(prepared), str(dyn), weight_type=QuantType.QInt8)
     outputs["dynamic"] = dyn
-    for name, method in STATIC_VARIANTS.items():
+    for name, method in (static_variants or STATIC_VARIANTS).items():
         path = out_dir / f"{fp32.stem}.{name}.onnx"
         quantize_static(
             str(prepared),
             str(path),
-            Calibration(input_name),
+            Calibration(input_name, images),
             quant_format=QuantFormat.QDQ,
             per_channel=True,
             weight_type=QuantType.QInt8,
@@ -70,7 +80,7 @@ def main() -> None:
     ap.add_argument("--tag", required=True)
     args = ap.parse_args()
     fp32 = CHECKPOINT_DIR / f"{args.tag}.onnx"
-    for name, path in quantize_all(fp32, CHECKPOINT_DIR).items():
+    for name, path in quantize_all(fp32, CHECKPOINT_DIR, calibration_images()).items():
         print(name, path.stat().st_size)
 
 
