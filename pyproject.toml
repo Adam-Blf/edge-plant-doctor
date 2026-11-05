@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edge-plant-doctor"
+version = "0.1.0"
+description = "Plant disease detection on edge devices: MobileNetV3-Small, distillation and int8 quantization"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Adam Beloucif" }, { name = "Emilien Morice" }]
+dependencies = [
+  "numpy>=1.26",
+  "pillow>=10",
+  "torch>=2.4",
+  "torchvision>=0.19",
+  "onnx>=1.16",
+  "onnxscript>=0.1",
+  "onnxruntime>=1.18",
+  "scikit-learn>=1.4",
+  "matplotlib>=3.8",
+  "huggingface_hub>=0.24",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov", "ruff>=0.5"]
+report = ["fpdf2>=2.8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "N"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = ["slow: needs the committed models or fixtures"]
