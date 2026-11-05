@@ -1,9 +1,11 @@
 """Shared constants: paths, input geometry, normalisation."""
 
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
+CACHE_DIR = Path(os.environ.get("EDGEPLANT_CACHE", DATA_DIR / "cache"))
 CHECKPOINT_DIR = ROOT / "checkpoints"
 MODELS_DIR = ROOT / "models"
 RESULTS_DIR = ROOT / "results"

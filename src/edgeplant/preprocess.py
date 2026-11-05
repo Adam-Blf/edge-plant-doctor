@@ -35,8 +35,9 @@ def resize_area(rgb: np.ndarray, size: int = INPUT_SIZE) -> np.ndarray:
     """Square RGB uint8 (s, s, 3) to float32 (size, size, 3) in the 0..255 range."""
     side = rgb.shape[0]
     wy = area_weights(side, size)
-    out = np.einsum("ij,jkc->ikc", wy, rgb.astype(np.float64))
-    out = np.einsum("kj,ijc->ikc", wy, out)
+    rows = (wy @ rgb.astype(np.float64).reshape(side, side * 3)).reshape(size, side, 3)
+    cols = wy @ rows.transpose(1, 0, 2).reshape(side, size * 3)
+    out = cols.reshape(size, size, 3).transpose(1, 0, 2)
     return out.astype(np.float32)
 
 
