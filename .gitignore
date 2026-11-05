@@ -1,0 +1,32 @@
+# data and training artefacts
+data/
+datasets/
+*.parquet
+*.zip
+checkpoints/
+*.pt
+*.pth
+*.npy
+*.npz
+runs/
+cache/
+# deployed models are the only binaries allowed
+!models/*.onnx
+# python
+__pycache__/
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+# node
+node_modules/
+app/dist/
+app/dev-dist/
+# secrets
+.env
+.env.*
+*secret*
+*.token
+ghp_*
+*.pem
+*.key
