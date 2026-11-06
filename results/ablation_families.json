@@ -1,0 +1,28 @@
+{
+ "tag": "student_distilled",
+ "split": "val",
+ "images": 1508,
+ "fp32_accuracy": 0.9820954907161804,
+ "families": {
+  "stem": {
+   "nodes": 1,
+   "accuracy": 0.253315649867374,
+   "agreement_with_fp32": 0.25596816976127323
+  },
+  "depthwise": {
+   "nodes": 11,
+   "accuracy": 0.3978779840848806,
+   "agreement_with_fp32": 0.40119363395225466
+  },
+  "pointwise": {
+   "nodes": 40,
+   "accuracy": 0.980106100795756,
+   "agreement_with_fp32": 0.986737400530504
+  },
+  "classifier": {
+   "nodes": 2,
+   "accuracy": 0.9820954907161804,
+   "agreement_with_fp32": 1.0
+  }
+ }
+}

@@ -33,3 +33,6 @@ ghp_*
 
 # Design tool cache
 .impeccable/
+
+# Run logs
+*.log
