@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Plant Doctor",
+    "slug": "plant-doctor",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "backgroundColor": "#f3f0e6",
+    "platforms": ["android"],
+    "android": {
+      "package": "com.beloucif.plantdoctor",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1f6b3a"
+      },
+      "blockedPermissions": [
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SYSTEM_ALERT_WINDOW"
+      ]
+    },
+    "plugins": [
+      "onnxruntime-react-native",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Plant Doctor utilise l'appareil photo pour photographier une feuille. La photo reste sur le téléphone.",
+          "photosPermission": false,
+          "microphonePermission": false
+        }
+      ]
+    ]
+  }
+}
