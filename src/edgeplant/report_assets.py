@@ -52,6 +52,32 @@ def accuracy_table(acc: dict, latency: dict) -> str:
     return "\n".join(rows)
 
 
+FAMILY_FR = {
+    "stem": "Convolution d'entrée",
+    "depthwise": "Convolutions en profondeur",
+    "pointwise": "Convolutions ponctuelles",
+    "classifier": "Classifieur",
+}
+
+
+def ablation_table(ablation: dict) -> str:
+    if not ablation:
+        return "Étude par famille de couches : non mesurée."
+    lines = [
+        f"Une seule famille en int8, le reste en flottant ({ablation['images']} images de "
+        f"validation, FP32 : {ablation['fp32_accuracy']:.2%})",
+        "",
+        "| Famille quantifiée | Couches | Précision | Accord avec FP32 |",
+        "|---|---:|---:|---:|",
+    ]
+    for family, row in ablation["families"].items():
+        lines.append(
+            f"| {FAMILY_FR.get(family, family)} | {row['nodes']} | {row['accuracy']:.2%} "
+            f"| {row['agreement_with_fp32']:.2%} |"
+        )
+    return "\n".join(lines).replace("%", " %")
+
+
 def latency_table(latency: dict, title: str) -> str:
     if not latency:
         return f"{title} : non mesuré."
@@ -71,61 +97,95 @@ def latency_table(latency: dict, title: str) -> str:
 
 
 def plot_size_accuracy(acc: dict, out: Path) -> None:
-    fig, ax = plt.subplots(figsize=(7.5, 4.6))
+    # Left: full scale, where the naive recipes collapse. Right: zoom on the usable
+    # variants, labelled once (distilled) with staggered offsets so labels never overlap.
+    fig, (full, zoom) = plt.subplots(1, 2, figsize=(9, 4.4), gridspec_kw={"width_ratios": [1, 1.4]})
+    usable = {s: r for s, r in acc.items() if r["accuracy"] >= 0.9}
+    for ax, rows in ((full, acc), (zoom, usable)):
+        for stem, r in rows.items():
+            distilled = stem.startswith("student_distilled")
+            ax.scatter(
+                r["size_mb"],
+                r["accuracy"] * 100,
+                s=60,
+                color=LEAF if distilled else RUST,
+                marker="o" if "." not in stem else "s",
+                alpha=0.9,
+            )
+        ax.set_xlabel("Taille du fichier (Mo)")
+        ax.grid(alpha=0.25)
+    naive: dict[str, tuple[float, float]] = {}
     for stem, r in acc.items():
-        distilled = stem.startswith("student_distilled")
-        ax.scatter(
-            r["size_mb"],
-            r["accuracy"] * 100,
-            s=70,
-            color=LEAF if distilled else RUST,
-            marker="o" if "." not in stem else "s",
-        )
-        ax.annotate(
-            stem.partition(".")[2] or "fp32",
-            (r["size_mb"], r["accuracy"] * 100),
+        if r["accuracy"] < 0.9:
+            variant = stem.partition(".")[2]
+            point = (r["size_mb"], r["accuracy"] * 100)
+            naive[variant] = max(naive.get(variant, point), point, key=lambda p: p[1])
+    for variant, point in naive.items():
+        full.annotate(
+            VARIANTS.get(variant, variant),
+            point,
             textcoords="offset points",
-            xytext=(5, 4),
+            xytext=(8, 2),
             fontsize=7,
             color=INK,
         )
-    ax.set_xlabel("Taille du fichier (Mo)")
-    ax.set_ylabel("Précision top-1 sur le jeu de test (%)")
-    ax.set_title("Précision et taille : vert = distillé, rouge = élève seul", fontsize=10)
-    ax.grid(alpha=0.25)
+    callouts = {
+        "student_distilled.static_mixed_percentile": ("Modèle livré (int8)", (40, -30)),
+        "student_distilled": ("Distillé FP32", (-70, -30)),
+    }
+    for stem, (text, offset) in callouts.items():
+        if stem in usable:
+            r = usable[stem]
+            zoom.annotate(
+                text,
+                (r["size_mb"], r["accuracy"] * 100),
+                textcoords="offset points",
+                xytext=offset,
+                fontsize=8,
+                color=INK,
+                fontweight="bold",
+                arrowprops={"arrowstyle": "-", "color": INK, "lw": 0.6},
+            )
+    full.set_ylabel("Précision top-1 sur le jeu de test (%)")
+    full.set_title("Toutes les variantes", fontsize=9)
+    zoom.set_title("Variantes utilisables (zoom)", fontsize=9)
+    fig.suptitle("Précision et taille : vert = distillé, rouge = élève seul", fontsize=10)
     fig.tight_layout()
     fig.savefig(out, dpi=200)
     plt.close(fig)
 
 
 def plot_latency(latency: dict, emulated: dict, out: Path) -> None:
-    models = list(latency["threads"]["1"])
-    fig, ax = plt.subplots(figsize=(7.5, 4.6))
-    width = 0.38
-    xs = range(len(models))
-    ax.bar(
-        [x - width / 2 for x in xs],
-        [latency["threads"]["1"][m]["p50_ms"] for m in models],
-        width,
-        color=LEAF,
-        label="x86, 1 thread (p50)",
+    # x86 in milliseconds and QEMU in seconds never share an axis: left panel shows x86
+    # latency per variant, right panel the arm64 speed-up relative to each student's FP32.
+    one = latency["threads"]["1"]
+    models = sorted(one, key=lambda m: one[m]["p50_ms"])
+    em = emulated.get("threads", {}).get("1", {}) if emulated else {}
+    fig, (left, right) = (
+        plt.subplots(1, 2, figsize=(9, 4.8), gridspec_kw={"width_ratios": [1.6, 1]} if em else None)
+        if em
+        else (*plt.subplots(figsize=(7.5, 4.8)), None)
     )
-    if emulated:
-        em = emulated["threads"]["1"]
-        ax.bar(
-            [x + width / 2 for x in xs],
-            [em.get(m, {}).get("p50_ms", 0) for m in models],
-            width,
-            color=SAND,
-            label="arm64 émulé QEMU, 1 thread (p50, indicatif)",
-        )
-    ax.set_xticks(list(xs))
-    ax.set_xticklabels(
-        [m.partition(".")[2] or "fp32" for m in models], rotation=40, ha="right", fontsize=7
+    left.barh(
+        [label(m) for m in models],
+        [one[m]["p50_ms"] for m in models],
+        color=[LEAF if m.startswith("student_distilled") else RUST for m in models],
     )
-    ax.set_ylabel("Latence par image (ms)")
-    ax.legend(fontsize=8)
-    ax.grid(axis="y", alpha=0.25)
+    left.invert_yaxis()
+    left.tick_params(axis="y", labelsize=6.5)
+    left.set_xlabel("Latence p50 x86, 1 thread (ms)")
+    left.grid(axis="x", alpha=0.25)
+    left.set_title("x86 : vert = distillé, rouge = élève seul", fontsize=9)
+    if right is not None:
+        names = [m for m in em if not m.endswith(("student_baseline", "student_distilled"))]
+        base = {m: em.get(m.partition(".")[0], {}).get("p50_ms") for m in names}
+        speed = [base[m] / em[m]["p50_ms"] if base[m] else 0 for m in names]
+        right.bar([VARIANTS.get(m.partition(".")[2], m) for m in names], speed, color=SAND)
+        right.axhline(1, color=INK, lw=0.8, ls="--")
+        right.set_ylabel("Accélération vs FP32 (x)")
+        right.set_title("arm64 émulé QEMU (rapport seul)", fontsize=9)
+        right.tick_params(axis="x", labelsize=7, rotation=20)
+        right.grid(axis="y", alpha=0.25)
     fig.tight_layout()
     fig.savefig(out, dpi=200)
     plt.close(fig)
@@ -141,7 +201,7 @@ def plot_training(out: Path) -> None:
                 [h["accuracy"] * 100 for h in hist],
                 marker="o",
                 color=color,
-                label=tag.replace("_", " "),
+                label={**STUDENTS, "teacher": "Professeur EfficientNet-B0"}.get(tag, tag),
             )
     ax.set_xlabel("Époque")
     ax.set_ylabel("Précision de validation (%)")
@@ -171,6 +231,7 @@ def main() -> None:
         accuracy_table(acc, lat),
         latency_table(lat, "Latence x86"),
         latency_table(arm, "Latence arm64 émulée"),
+        ablation_table(load("ablation_families.json")),
     ]
     (args.out / "results_tables.md").write_text("\n\n".join(tables) + "\n", encoding="utf-8")
 
