@@ -30,3 +30,6 @@ app/dev-dist/
 ghp_*
 *.pem
 *.key
+
+# Run logs
+*.log

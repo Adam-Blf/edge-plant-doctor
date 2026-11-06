@@ -1,0 +1,53 @@
+{
+ "host": {
+  "label": "arm64 QEMU",
+  "emulated": true,
+  "machine": "aarch64",
+  "system": "Linux-6.6.87.2-microsoft-standard-WSL2-aarch64-with-glibc2.41",
+  "onnxruntime": "1.31.1"
+ },
+ "threads": {
+  "1": {
+   "student_baseline": {
+    "p50_ms": 4573.2088137499995,
+    "p95_ms": 5144.595752775007,
+    "p50_spread_ms": [
+     4494.404737500076,
+     4652.012889999924
+    ],
+    "rounds": 2,
+    "runs_per_round": 30
+   },
+   "student_distilled": {
+    "p50_ms": 3980.557695499897,
+    "p95_ms": 4647.617628174992,
+    "p50_spread_ms": [
+     3948.8261774999955,
+     4012.2892134997983
+    ],
+    "rounds": 2,
+    "runs_per_round": 30
+   },
+   "student_distilled.dynamic_gemm": {
+    "p50_ms": 4236.910355500015,
+    "p95_ms": 4773.818437850019,
+    "p50_spread_ms": [
+     3984.473342499996,
+     4489.3473685000345
+    ],
+    "rounds": 2,
+    "runs_per_round": 30
+   },
+   "student_distilled.static_mixed_percentile": {
+    "p50_ms": 2270.245579999937,
+    "p95_ms": 2539.925734199983,
+    "p50_spread_ms": [
+     2249.197486499952,
+     2291.293673499922
+    ],
+    "rounds": 2,
+    "runs_per_round": 30
+   }
+  }
+ }
+}
