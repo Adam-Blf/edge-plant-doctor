@@ -1,0 +1,335 @@
+{
+ "host": {
+  "label": "x86 CPU",
+  "emulated": false,
+  "machine": "AMD64",
+  "system": "Windows-11-10.0.26200-SP0",
+  "onnxruntime": "1.24.4"
+ },
+ "threads": {
+  "1": {
+   "student_baseline.dynamic_all": {
+    "p50_ms": 141.13094999993336,
+    "p95_ms": 251.70994499935654,
+    "p50_spread_ms": [
+     111.96354999992764,
+     141.23964999953387
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.dynamic_gemm": {
+    "p50_ms": 7.576699999845005,
+    "p95_ms": 13.207604999843168,
+    "p50_spread_ms": [
+     7.327699999677861,
+     13.069249999716703
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.dynamic_mixed": {
+    "p50_ms": 62.52395000001343,
+    "p95_ms": 88.13963499997044,
+    "p50_spread_ms": [
+     52.698700000291865,
+     75.3751000002012
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline": {
+    "p50_ms": 8.807449999949313,
+    "p95_ms": 19.503489999760852,
+    "p50_spread_ms": [
+     7.228550000490941,
+     12.196050000511605
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_all_minmax": {
+    "p50_ms": 9.757949999766424,
+    "p95_ms": 13.183504999778961,
+    "p50_spread_ms": [
+     8.361650000097143,
+     15.68684999983816
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_mixed_entropy": {
+    "p50_ms": 8.680349999849568,
+    "p95_ms": 22.387705000528513,
+    "p50_spread_ms": [
+     7.089950000136014,
+     13.683850000234088
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_mixed_minmax": {
+    "p50_ms": 9.047600000030798,
+    "p95_ms": 26.616350000267623,
+    "p50_spread_ms": [
+     7.590900000195688,
+     15.097349999905418
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_mixed_percentile": {
+    "p50_ms": 8.12560000031226,
+    "p95_ms": 27.34391999938452,
+    "p50_spread_ms": [
+     7.915749999938271,
+     13.753899999755959
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.dynamic_all": {
+    "p50_ms": 119.82529999977487,
+    "p95_ms": 277.6149149999128,
+    "p50_spread_ms": [
+     114.1872000002877,
+     194.57950000014534
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.dynamic_gemm": {
+    "p50_ms": 8.318400000007387,
+    "p95_ms": 15.583550000064848,
+    "p50_spread_ms": [
+     7.34489999967991,
+     9.693300000435556
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.dynamic_mixed": {
+    "p50_ms": 60.36865000032776,
+    "p95_ms": 88.75298000057226,
+    "p50_spread_ms": [
+     52.19554999985121,
+     100.4445499997928
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled": {
+    "p50_ms": 8.182599999599915,
+    "p95_ms": 17.369590000635064,
+    "p50_spread_ms": [
+     6.288099999892438,
+     10.602250000374625
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_all_minmax": {
+    "p50_ms": 13.693999999759399,
+    "p95_ms": 34.18341999981746,
+    "p50_spread_ms": [
+     9.335449999980483,
+     15.295049999622279
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_mixed_entropy": {
+    "p50_ms": 8.812000000489206,
+    "p95_ms": 22.280180000598186,
+    "p50_spread_ms": [
+     7.475649999832967,
+     11.651950000214129
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_mixed_minmax": {
+    "p50_ms": 8.973500000138301,
+    "p95_ms": 20.789479999939427,
+    "p50_spread_ms": [
+     8.403349999753118,
+     11.876500000198575
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_mixed_percentile": {
+    "p50_ms": 7.575199999791948,
+    "p95_ms": 13.65403999971022,
+    "p50_spread_ms": [
+     7.356699999945704,
+     12.948399999913818
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   }
+  },
+  "4": {
+   "student_baseline.dynamic_all": {
+    "p50_ms": 96.84875000039028,
+    "p95_ms": 231.44234499964114,
+    "p50_spread_ms": [
+     83.57215000023643,
+     97.71530000034545
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.dynamic_gemm": {
+    "p50_ms": 6.657399999312474,
+    "p95_ms": 14.415115000429056,
+    "p50_spread_ms": [
+     5.236800000147923,
+     11.126750000130414
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.dynamic_mixed": {
+    "p50_ms": 43.90469999952984,
+    "p95_ms": 138.6457499999778,
+    "p50_spread_ms": [
+     36.375650000081805,
+     49.87170000003971
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline": {
+    "p50_ms": 8.897700000034092,
+    "p95_ms": 17.829894999931636,
+    "p50_spread_ms": [
+     8.414249999987078,
+     10.130099999969389
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_all_minmax": {
+    "p50_ms": 8.307350000450242,
+    "p95_ms": 26.912470000206653,
+    "p50_spread_ms": [
+     7.905399999799556,
+     13.676350000423554
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_mixed_entropy": {
+    "p50_ms": 7.421199999953387,
+    "p95_ms": 18.49844500002291,
+    "p50_spread_ms": [
+     6.064550000246527,
+     10.704049999731069
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_mixed_minmax": {
+    "p50_ms": 9.72195000076681,
+    "p95_ms": 21.8858199998067,
+    "p50_spread_ms": [
+     7.9620499996053695,
+     11.319599999751517
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_baseline.static_mixed_percentile": {
+    "p50_ms": 6.9500500003414345,
+    "p95_ms": 12.663350000502758,
+    "p50_spread_ms": [
+     4.90124999987529,
+     14.45270000021992
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.dynamic_all": {
+    "p50_ms": 83.46725000046717,
+    "p95_ms": 213.80420999971642,
+    "p50_spread_ms": [
+     73.50339999993594,
+     88.17714999986492
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.dynamic_gemm": {
+    "p50_ms": 6.938850000551611,
+    "p95_ms": 11.533889999554958,
+    "p50_spread_ms": [
+     5.143750000115688,
+     12.0991500002674
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.dynamic_mixed": {
+    "p50_ms": 44.33095000013054,
+    "p95_ms": 106.88882999984342,
+    "p50_spread_ms": [
+     39.066149999598565,
+     44.66709999996965
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled": {
+    "p50_ms": 7.283599999936996,
+    "p95_ms": 14.949715000102513,
+    "p50_spread_ms": [
+     4.885400000603113,
+     7.90740000002188
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_all_minmax": {
+    "p50_ms": 9.532349999972212,
+    "p95_ms": 19.21042999942983,
+    "p50_spread_ms": [
+     7.031549999737763,
+     9.920550000060757
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_mixed_entropy": {
+    "p50_ms": 10.136599999896134,
+    "p95_ms": 28.91340999976819,
+    "p50_spread_ms": [
+     9.78270000041448,
+     11.403599999994185
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_mixed_minmax": {
+    "p50_ms": 8.453150000150345,
+    "p95_ms": 26.553224999770464,
+    "p50_spread_ms": [
+     5.907249999836495,
+     21.169150000332593
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   },
+   "student_distilled.static_mixed_percentile": {
+    "p50_ms": 6.250699999782228,
+    "p95_ms": 11.580240000103004,
+    "p50_spread_ms": [
+     6.118850000348175,
+     7.002499999543943
+    ],
+    "rounds": 3,
+    "runs_per_round": 100
+   }
+  }
+ }
+}

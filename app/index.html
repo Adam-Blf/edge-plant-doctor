@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Plant Doctor</title>
+    <meta name="description" content="Diagnostic de maladies de plantes sur le téléphone, sans réseau." />
+    <meta name="theme-color" content="#f3f0e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1a13" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Plant Doctor" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <span class="brand" id="brand"><span class="brand-name">Plant Doctor</span></span>
+        <span class="chip" id="status" role="status">Chargement du modèle</span>
+      </header>
+
+      <section class="hero">
+        <h1>Votre plante est-elle malade&nbsp;?</h1>
+        <p class="lead">
+          Photographiez une feuille. La réponse arrive en moins d'une seconde, directement sur
+          ce téléphone, sans réseau.
+        </p>
+        <div class="actions">
+          <button class="btn primary" id="btn-camera" type="button" disabled></button>
+          <button class="btn secondary" id="btn-gallery" type="button" disabled></button>
+        </div>
+        <input id="input-camera" type="file" accept="image/*" capture="environment" hidden />
+        <input id="input-gallery" type="file" accept="image/*" hidden />
+        <p class="ios-hint" id="ios-hint" hidden>
+          Pour l'installer sur l'iPhone, touchez Partager puis «&nbsp;Sur l'écran d'accueil&nbsp;».
+        </p>
+      </section>
+
+      <section class="result" id="result" aria-live="polite" hidden>
+        <canvas id="preview" class="preview" aria-label="Feuille analysée"></canvas>
+        <div class="verdict">
+          <span class="pill" id="pill"></span>
+          <h2 id="headline"></h2>
+          <p class="uncertain" id="uncertain" hidden></p>
+          <ol class="bars" id="bars"></ol>
+          <p class="timing" id="timing"></p>
+        </div>
+      </section>
+
+      <p class="error" id="error" role="alert" hidden></p>
+
+      <footer class="foot">
+        <p id="model-info"></p>
+        <p>
+          Entraîné sur PlantVillage, des photos de feuilles prises en laboratoire. Sur le terrain,
+          avec un fond chargé ou plusieurs feuilles, la réponse peut se tromper. Aucune image ne
+          quitte votre téléphone.
+        </p>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
