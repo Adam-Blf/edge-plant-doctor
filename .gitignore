@@ -30,3 +30,6 @@ app/dev-dist/
 ghp_*
 *.pem
 *.key
+
+# Design tool cache
+.impeccable/
