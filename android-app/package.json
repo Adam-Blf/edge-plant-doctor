@@ -1,6 +1,6 @@
 {
   "name": "plant-doctor-android",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "main": "index.ts",
   "description": "Edge Plant Doctor, offline plant disease diagnosis with native ONNX Runtime",
