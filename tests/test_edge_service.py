@@ -1,7 +1,9 @@
+import http.client
 import io
 import json
 import threading
 import urllib.error
+import urllib.parse
 import urllib.request
 from http.server import ThreadingHTTPServer
 
@@ -92,9 +94,18 @@ def test_bad_inputs_are_refused_without_stack_traces(server):
 
 
 def test_oversized_body_is_refused(server):
-    url = server()
-    status, _ = post(url, b"x" * (10 * 1024 * 1024 + 1))
-    assert status == 413
+    # The server refuses on the declared Content-Length, before reading the body.
+    # Announcing the size without sending it keeps the test deterministic: streaming
+    # 10 MB raced the early 413 and the closed socket aborted the upload on Windows.
+    host, port = urllib.parse.urlsplit(server()).netloc.split(":")
+    conn = http.client.HTTPConnection(host, int(port), timeout=20)
+    conn.putrequest("POST", "/predict")
+    conn.putheader("Content-Length", str(10 * 1024 * 1024 + 1))
+    conn.endheaders()
+    res = conn.getresponse()
+    assert res.status == 413
+    assert "10 MB" in json.loads(res.read())["error"]
+    conn.close()
 
 
 def test_token_is_enforced_when_configured(server):
