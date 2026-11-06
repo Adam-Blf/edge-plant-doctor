@@ -1,0 +1,18 @@
+[Unit]
+Description=Plant Doctor edge service
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/opt/plant-doctor
+Environment=PLANT_DOCTOR_HOME=/opt/plant-doctor
+Environment=PYTHONPATH=/opt/plant-doctor/src:/opt/plant-doctor/edge/rpi
+EnvironmentFile=/etc/plant-doctor.env
+ExecStart=/opt/plant-doctor/.venv/bin/python -m plantdoctor_edge.server --host 0.0.0.0 --port 8080
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
