@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "edge-plant-doctor"
-version = "0.1.0"
+version = "1.0.0"
 description = "Plant disease detection on edge devices: MobileNetV3-Small, distillation and int8 quantization"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Adam Beloucif" }, { name = "Emilien Morice" }]
+license = { text = "MIT" }
 dependencies = [
   "numpy>=1.26",
   "pillow>=10",
