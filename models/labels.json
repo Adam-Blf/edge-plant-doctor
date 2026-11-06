@@ -1,0 +1,230 @@
+[
+ {
+  "id": "Apple___Apple_scab",
+  "crop": "Pomme",
+  "condition": "Tavelure",
+  "healthy": false
+ },
+ {
+  "id": "Apple___Black_rot",
+  "crop": "Pomme",
+  "condition": "Pourriture noire",
+  "healthy": false
+ },
+ {
+  "id": "Apple___Cedar_apple_rust",
+  "crop": "Pomme",
+  "condition": "Rouille grillagée",
+  "healthy": false
+ },
+ {
+  "id": "Apple___healthy",
+  "crop": "Pomme",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Blueberry___healthy",
+  "crop": "Myrtille",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Cherry_(including_sour)___Powdery_mildew",
+  "crop": "Cerise",
+  "condition": "Oïdium",
+  "healthy": false
+ },
+ {
+  "id": "Cherry_(including_sour)___healthy",
+  "crop": "Cerise",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+  "crop": "Maïs",
+  "condition": "Cercosporiose (tache grise)",
+  "healthy": false
+ },
+ {
+  "id": "Corn_(maize)___Common_rust_",
+  "crop": "Maïs",
+  "condition": "Rouille commune",
+  "healthy": false
+ },
+ {
+  "id": "Corn_(maize)___Northern_Leaf_Blight",
+  "crop": "Maïs",
+  "condition": "Helminthosporiose du Nord",
+  "healthy": false
+ },
+ {
+  "id": "Corn_(maize)___healthy",
+  "crop": "Maïs",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Grape___Black_rot",
+  "crop": "Vigne",
+  "condition": "Pourriture noire",
+  "healthy": false
+ },
+ {
+  "id": "Grape___Esca_(Black_Measles)",
+  "crop": "Vigne",
+  "condition": "Esca (rougeot)",
+  "healthy": false
+ },
+ {
+  "id": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+  "crop": "Vigne",
+  "condition": "Brûlure des feuilles (Isariopsis)",
+  "healthy": false
+ },
+ {
+  "id": "Grape___healthy",
+  "crop": "Vigne",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Orange___Haunglongbing_(Citrus_greening)",
+  "crop": "Oranger",
+  "condition": "Huanglongbing (jaunissement des agrumes)",
+  "healthy": false
+ },
+ {
+  "id": "Peach___Bacterial_spot",
+  "crop": "Pêcher",
+  "condition": "Tache bactérienne",
+  "healthy": false
+ },
+ {
+  "id": "Peach___healthy",
+  "crop": "Pêcher",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Pepper,_bell___Bacterial_spot",
+  "crop": "Poivron",
+  "condition": "Tache bactérienne",
+  "healthy": false
+ },
+ {
+  "id": "Pepper,_bell___healthy",
+  "crop": "Poivron",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Potato___Early_blight",
+  "crop": "Pomme de terre",
+  "condition": "Alternariose",
+  "healthy": false
+ },
+ {
+  "id": "Potato___Late_blight",
+  "crop": "Pomme de terre",
+  "condition": "Mildiou",
+  "healthy": false
+ },
+ {
+  "id": "Potato___healthy",
+  "crop": "Pomme de terre",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Raspberry___healthy",
+  "crop": "Framboisier",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Soybean___healthy",
+  "crop": "Soja",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Squash___Powdery_mildew",
+  "crop": "Courge",
+  "condition": "Oïdium",
+  "healthy": false
+ },
+ {
+  "id": "Strawberry___Leaf_scorch",
+  "crop": "Fraisier",
+  "condition": "Brûlure des feuilles",
+  "healthy": false
+ },
+ {
+  "id": "Strawberry___healthy",
+  "crop": "Fraisier",
+  "condition": "Feuille saine",
+  "healthy": true
+ },
+ {
+  "id": "Tomato___Bacterial_spot",
+  "crop": "Tomate",
+  "condition": "Tache bactérienne",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Early_blight",
+  "crop": "Tomate",
+  "condition": "Alternariose",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Late_blight",
+  "crop": "Tomate",
+  "condition": "Mildiou",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Leaf_Mold",
+  "crop": "Tomate",
+  "condition": "Cladosporiose",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Septoria_leaf_spot",
+  "crop": "Tomate",
+  "condition": "Septoriose",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Spider_mites Two-spotted_spider_mite",
+  "crop": "Tomate",
+  "condition": "Acariens (tétranyque à deux points)",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Target_Spot",
+  "crop": "Tomate",
+  "condition": "Tache cible",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+  "crop": "Tomate",
+  "condition": "Virus de l'enroulement jaune (TYLCV)",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___Tomato_mosaic_virus",
+  "crop": "Tomate",
+  "condition": "Virus de la mosaïque",
+  "healthy": false
+ },
+ {
+  "id": "Tomato___healthy",
+  "crop": "Tomate",
+  "condition": "Feuille saine",
+  "healthy": true
+ }
+]
