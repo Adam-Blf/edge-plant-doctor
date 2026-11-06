@@ -1,0 +1,26 @@
+{
+  "name": "edge-plant-doctor-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline plant disease doctor, onnxruntime-web WASM PWA",
+  "scripts": {
+    "prebuild": "node scripts/prepare-assets.ts",
+    "predev": "node scripts/prepare-assets.ts",
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.sw.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource/be-vietnam-pro": "^5.3.0",
+    "onnxruntime-web": "^1.31.1",
+    "reicon": "^1.2.5"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}
