@@ -39,5 +39,5 @@ select = ["E", "F", "I", "UP", "B", "SIM", "N"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "edge/rpi"]
 markers = ["slow: needs the committed models or fixtures"]
