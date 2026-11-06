@@ -13,7 +13,7 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from .engine import Engine, ImageRejected
+from .engine import Engine, ImageRejectedError
 
 MAX_BODY = 10 * 1024 * 1024
 log = logging.getLogger("plantdoctor")
@@ -30,9 +30,7 @@ def is_loopback(host: str) -> bool:
 
 def validate_binding(host: str, token: str | None) -> None:
     if not is_loopback(host) and not token:
-        raise SystemExit(
-            f"Refusing to listen on {host} without a token. Set PLANT_DOCTOR_TOKEN."
-        )
+        raise SystemExit(f"Refusing to listen on {host} without a token. Set PLANT_DOCTOR_TOKEN.")
 
 
 def make_handler(engine: Engine, token: str | None) -> type[BaseHTTPRequestHandler]:
@@ -77,7 +75,7 @@ def make_handler(engine: Engine, token: str | None) -> type[BaseHTTPRequestHandl
                 return self.reply(413, {"error": "image larger than 10 MB"})
             try:
                 self.reply(200, engine.classify(self.rfile.read(length)))
-            except ImageRejected as exc:
+            except ImageRejectedError as exc:
                 self.reply(400, {"error": str(exc)})
             except Exception:
                 log.exception("inference failed")

@@ -6,7 +6,7 @@ import statistics
 import time
 from pathlib import Path
 
-from .engine import Engine, ImageRejected
+from .engine import Engine, ImageRejectedError
 
 
 def main() -> None:
@@ -23,7 +23,7 @@ def main() -> None:
         try:
             data = path.read_bytes()
             result = engine.classify(data, args.top)
-        except (OSError, ImageRejected) as exc:
+        except (OSError, ImageRejectedError) as exc:
             print(f"{path}: {exc}")
             continue
         print(path)

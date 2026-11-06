@@ -8,10 +8,10 @@ from http.server import ThreadingHTTPServer
 import numpy as np
 import pytest
 from PIL import Image
+from plantdoctor_edge.engine import Engine, ImageRejectedError, decode
+from plantdoctor_edge.server import is_loopback, make_handler, validate_binding
 
 from edgeplant.config import ROOT
-from plantdoctor_edge.engine import Engine, ImageRejected, decode
-from plantdoctor_edge.server import is_loopback, make_handler, validate_binding
 
 MODEL = ROOT / "models" / "plant-doctor-int8.onnx"
 LABELS = ROOT / "models" / "labels.json"
@@ -68,11 +68,11 @@ def test_engine_returns_three_ordered_predictions(engine):
 
 
 def test_decode_rejects_garbage_and_oversized_images():
-    with pytest.raises(ImageRejected):
+    with pytest.raises(ImageRejectedError):
         decode(b"not an image")
     buf = io.BytesIO()
     Image.new("L", (7000, 7000)).save(buf, "PNG")
-    with pytest.raises(ImageRejected):
+    with pytest.raises(ImageRejectedError):
         decode(buf.getvalue())
 
 

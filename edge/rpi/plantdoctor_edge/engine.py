@@ -14,7 +14,7 @@ from edgeplant.preprocess import preprocess
 MAX_PIXELS = 40_000_000
 
 
-class ImageRejected(ValueError):
+class ImageRejectedError(ValueError):
     """The bytes are not a usable image (corrupt, unsupported or too large)."""
 
 
@@ -28,19 +28,17 @@ def decode(data: bytes) -> np.ndarray:
     try:
         with Image.open(io.BytesIO(data)) as img:
             if img.width * img.height > MAX_PIXELS:
-                raise ImageRejected("image too large")
+                raise ImageRejectedError("image too large")
             return np.asarray(ImageOps.exif_transpose(img).convert("RGB"))
     except (UnidentifiedImageError, OSError) as exc:
-        raise ImageRejected("not a readable image") from exc
+        raise ImageRejectedError("not a readable image") from exc
 
 
 class Engine:
     def __init__(self, model: Path, labels: Path, threads: int = 0):
         opts = ort.SessionOptions()
         opts.intra_op_num_threads = threads
-        self.session = ort.InferenceSession(
-            str(model), opts, providers=["CPUExecutionProvider"]
-        )
+        self.session = ort.InferenceSession(str(model), opts, providers=["CPUExecutionProvider"])
         self.input_name = self.session.get_inputs()[0].name
         self.labels = json.loads(labels.read_text(encoding="utf-8"))
         self.model_name = model.name
